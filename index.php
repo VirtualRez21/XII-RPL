@@ -34,7 +34,7 @@
 					<td> <?php echo $data["jenis_kelamin"] ?></td>
 					<td> <img src="media/foto_profile/<?php echo $data['foto'] ?>" width="128"></td>
 					<td>
-						<a href="proses.php?edit=<?php echo $data["id"] ?>">edit<i>&#x270F;</i></a>
+						<a href="edit.php?edit=<?php echo $data["id"] ?>">edit<i>&#x270F;</i></a>
 						<br>
 						<a href="proses.php?delete=<?php echo $data["id"] ?>">delete<i>&#x1F5D1;</i></a>
 					</td>
