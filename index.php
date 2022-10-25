@@ -7,6 +7,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script language="JavaScript" type="text/javascript">
+		function checkDelete(){
+		    return confirm('Afh iyh mau ngapus?');
+		}
+	</script>
 	<title>BELAJAR CRUD</title>
 </head>
 <body>
@@ -36,7 +41,7 @@
 					<td>
 						<a href="edit.php?edit=<?php echo $data["id"] ?>">edit<i>&#x270F;</i></a>
 						<br>
-						<a href="proses.php?delete=<?php echo $data["id"] ?>">delete<i>&#x1F5D1;</i></a>
+						<a href="proses.php?delete=<?php echo $data["id"] ?>" onclick="return checkDelete()">delete<i>&#x1F5D1;</i></a>
 					</td>
 				</tr>
 			<?php
