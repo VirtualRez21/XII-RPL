@@ -10,7 +10,6 @@
 	<title>BELAJAR CRUD</title>
 </head>
 <body>
-
 	<form method="POST" action="proses.php" enctype="multipart/form-data">
 		<label>nisn</label> <!-- inputan pertama -->
 		<input type="number" name="nisn">
@@ -29,6 +28,5 @@
 		<br><br>
 		<input type="submit" name="submit"> <!-- tombol kirim -->
 	</form>
-
 </body>
 </html>
