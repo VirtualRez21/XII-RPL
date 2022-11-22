@@ -1,5 +1,5 @@
 <?php
-	date_default_timezone_set('Asia/Bangkok');
+	date_default_timezone_set('Asia/Makassar');
 	$tgl = date("Y-m-d");
 	$waktu = date("h-i-sa");
 	$tglAndWaktu = $tgl.$waktu;
