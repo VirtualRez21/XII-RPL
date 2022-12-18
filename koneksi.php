@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	date_default_timezone_set('Asia/Makassar');
 	$tgl = date("Y-m-d");
 	$waktu = date("h-i-sa");

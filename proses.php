@@ -83,4 +83,68 @@
 			}
 		}
 	}
+	elseif(isset($_POST['submit_login_admin'])){
+		$username = $_POST['username'];
+		$password = $_POST['password'];
+		// admin
+		$password = md5($password);
+		// 21232f297a57a5a743894a0e4a801fc3
+
+		$sql = "SELECT * FROM admin WHERE username='$username' AND password='$password';";
+		$result = mysqli_query($conn, $sql);
+
+		if(mysqli_num_rows($result) === 1){
+			$login = mysqli_fetch_assoc($result);
+			if($login['username'] === $username && $login['password'] === $password){
+				$_SESSION['username'] = $login['username'];
+				$_SESSION['password'] = $login['password'];
+				echo "<script>
+				alert('Berhasil Login :)');window.location='index.php'
+				</script>
+				";
+			}
+			else{
+				echo "<script>
+					alert('Username atau Password Salah!');window.location='index.php'
+					</script>
+					";
+			}
+		}
+		else{
+			echo "<script>
+				alert('Username atau Password Salah!');window.location='index.php'
+				</script>
+				";
+		}
+	}
+
+	elseif (isset($_POST['submit_registrasi'])) {
+		$nama = $_POST['nama'];
+		$username = $_POST['username'];
+		$password = $_POST['password'];
+		$konfir_passwd = $_POST['konfir_password'];
+
+		$sql = "SELECT * FROM user WHERE username='$username';";
+		$result = mysqli_query($conn, $sql);
+
+		if(mysqli_num_rows($result) == 1){
+			$row = mysqli_fetch_assoc($result);
+			if($row['username'] == $username){
+				echo "<script>alert('Username Sudah Terdaftar, Silahkan Gunakan Username Yang Lain');window.location='registrasi_akun.php'</script>";
+			}
+		}
+		elseif ($password != $konfir_passwd || $konfir_passwd != $password) {
+			echo "<script>alert('Password Tidak Sesuai Dengan Konfirmasi Password!');window.location='registrasi_akun.php'</script>";
+		}
+		elseif(strlen($password) >= 6){
+			$password = md5($password);
+			$sql = "INSERT INTO user VALUES ('', '$username', '$password', '$nama');";
+			$result = mysqli_query($conn, $sql);
+
+			echo "<script>alert('Registrasi Akun Berhasil :)');window.location='registrasi_akun.php'</script>";
+		}
+		else{
+			echo "<script>alert('Password Tidak Disetujui!');window.location='registrasi_akun.php'</script>";
+		}
+	}
 ?>

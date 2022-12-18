@@ -1,90 +1,96 @@
 <?php
 	require 'koneksi.php';
 
-	if (isset($_POST['submit_cari'])) {
-		$cariData = $_POST['cari_data'];
-		$cariDataSiswa = $_POST['cari_data_siswa'];
-
-		if($cariData == "nisn"){
-			$result = mysqli_query($conn, "SELECT * FROM siswa WHERE nisn LIKE '%$cariDataSiswa%';");
-		}
-		elseif($cariData == "nama"){
-			$result = mysqli_query($conn, "SELECT * FROM siswa WHERE nama LIKE '%$cariDataSiswa%';");
-		}
-		elseif ($cariData == "alamat") {
-			$result = mysqli_query($conn, "SELECT * FROM siswa WHERE alamat LIKE '%$cariDataSiswa%';");
-		}
-		elseif($cariData == "jenis_kelamin"){
-			$result = mysqli_query($conn, "SELECT * FROM siswa WHERE jenis_kelamin LIKE '%$cariDataSiswa%';");
-		}
-
-		$number_of_results = mysqli_num_rows($result);
-		if ($number_of_results == 0 || mysqli_num_rows($result) == 0) {
-		 	echo "<script>
-			alert('Data Tidak Ditemukan :(');window.location='index.php'
-			</script>
-			";
-		 }
-	}
-	elseif(isset($_POST['submit_sort'])){
-		$dataSort = $_POST['sort_data'];
-		$dataSortValue = $_POST['sorting'];
-
-		if ($dataSort == "nisn") {
-			if($dataSortValue == "ascending"){
-				$result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY nisn ASC");
-			}
-			elseif($dataSortValue == "descending"){
-				$result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY nisn DESC");
-			}
-		}
-		elseif ($dataSort == "nama") {
-			if($dataSortValue == "ascending"){
-				$result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY nama ASC");
-			}
-			elseif($dataSortValue == "descending"){
-				$result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY nama DESC");
-			}
-		}
-		elseif ($dataSort == "alamat") {
-			if($dataSortValue == "ascending"){
-				$result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY alamat ASC");
-			}
-			elseif($dataSortValue == "descending"){
-				$result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY alamat DESC");
-			}
-		}
-		elseif ($dataSort == "jenis_kelamin") {
-			if($dataSortValue == "ascending"){
-				$result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY jenis_kelamin ASC");
-			}
-			elseif($dataSortValue == "descending"){
-				$result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY jenis_kelamin DESC");
-			}
-		}
+	// session_start();
+	if($_SESSION['username'] == ""){
+		header('location: login.php');
 	}
 	else{
-		// $result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY id DESC");
-		$siswa = mysqli_query($conn, "SELECT * FROM siswa ORDER BY id DESC");
-		$result_per_page = 6;
-		$number_of_results = mysqli_num_rows($siswa);
-		$number_of_page = ceil($number_of_results / $result_per_page);
-		if(isset($_GET['page'])){
-			if($_GET['page'] <= "0" || $_GET['page'] > $number_of_page){
-				echo "<script>alert('Halaman Tidak Ditemukan'); document.location.href = 'index.php';</script>";
+		if(isset($_POST['submit_cari'])) {
+			$cariData = $_POST['cari_data'];
+			$cariDataSiswa = $_POST['cari_data_siswa'];
+
+			if($cariData == "nisn"){
+				$result = mysqli_query($conn, "SELECT * FROM siswa WHERE nisn LIKE '%$cariDataSiswa%';");
+			}
+			elseif($cariData == "nama"){
+				$result = mysqli_query($conn, "SELECT * FROM siswa WHERE nama LIKE '%$cariDataSiswa%';");
+			}
+			elseif ($cariData == "alamat") {
+				$result = mysqli_query($conn, "SELECT * FROM siswa WHERE alamat LIKE '%$cariDataSiswa%';");
+			}
+			elseif($cariData == "jenis_kelamin"){
+				$result = mysqli_query($conn, "SELECT * FROM siswa WHERE jenis_kelamin LIKE '%$cariDataSiswa%';");
+			}
+
+			$number_of_results = mysqli_num_rows($result);
+			if ($number_of_results == 0 || mysqli_num_rows($result) == 0) {
+			 	echo "<script>
+				alert('Data Tidak Ditemukan :(');window.location='index.php'
+				</script>
+				";
+			 }
+		}
+		elseif(isset($_POST['submit_sort'])){
+			$dataSort = $_POST['sort_data'];
+			$dataSortValue = $_POST['sorting'];
+
+			if ($dataSort == "nisn") {
+				if($dataSortValue == "ascending"){
+					$result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY nisn ASC");
+				}
+				elseif($dataSortValue == "descending"){
+					$result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY nisn DESC");
+				}
+			}
+			elseif ($dataSort == "nama") {
+				if($dataSortValue == "ascending"){
+					$result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY nama ASC");
+				}
+				elseif($dataSortValue == "descending"){
+					$result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY nama DESC");
+				}
+			}
+			elseif ($dataSort == "alamat") {
+				if($dataSortValue == "ascending"){
+					$result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY alamat ASC");
+				}
+				elseif($dataSortValue == "descending"){
+					$result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY alamat DESC");
+				}
+			}
+			elseif ($dataSort == "jenis_kelamin") {
+				if($dataSortValue == "ascending"){
+					$result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY jenis_kelamin ASC");
+				}
+				elseif($dataSortValue == "descending"){
+					$result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY jenis_kelamin DESC");
+				}
 			}
 		}
-		$page = 1;
-		if(isset($_GET['page'])){
-			$page = $_GET['page'];
-		}
 		else{
-			$_GET['page'] = 1;
-		}
+			// $result = mysqli_query($conn, "SELECT * FROM siswa ORDER BY id DESC");
+			$siswa = mysqli_query($conn, "SELECT * FROM siswa ORDER BY id DESC");
+			$result_per_page = 6;
+			$number_of_results = mysqli_num_rows($siswa);
+			$number_of_page = ceil($number_of_results / $result_per_page);
+			if(isset($_GET['page'])){
+				if($_GET['page'] <= "0" || $_GET['page'] > $number_of_page){
+					echo "<script>alert('Halaman Tidak Ditemukan'); document.location.href = 'index.php';</script>";
+				}
+			}
+			$page = 1;
+			if(isset($_GET['page'])){
+				$page = $_GET['page'];
+			}
+			else{
+				$_GET['page'] = 1;
+			}
 
-		$this_page_first_result = ($page - 1) * $result_per_page;
-		$sql = 'SELECT * FROM siswa ORDER BY id DESC LIMIT ' . $this_page_first_result . ',' . $result_per_page;
-		$result = mysqli_query($conn, $sql);
+			$this_page_first_result = ($page - 1) * $result_per_page;
+			$sql = 'SELECT * FROM siswa ORDER BY id DESC LIMIT ' . $this_page_first_result . ',' . $result_per_page;
+			$result = mysqli_query($conn, $sql);
+		}
 	}
 ?>
 
@@ -99,6 +105,10 @@
 	</script>
 </head>
 <body>
+	<button>
+		<a href="proses_logout.php">Logout</a>
+	</button>
+
 	<form method="POST" action="index.php">
 		<select name="cari_data">
 		  <option value="nisn">NISN</option>

@@ -1,5 +1,15 @@
 <?php
-
+	session_start();
+	
+	if ($_SESSION['username'] != "admin") {
+		header('location: login.php');
+	}
+	else{
+		echo "<script>
+				alert('Selamat Datang Admin :)');
+				</script>
+				";
+	}
 ?>
 
 <!DOCTYPE html>
